@@ -16,16 +16,16 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HMACServiceTest {
+class HmacServiceTest {
 
-    HMACService service;
+    HmacService service;
     Config config;
 
     @BeforeEach
     void setup(@TempDir Path tempDir) throws IOException {
         // using default config values
         setupConfig(tempDir);
-        service = new HMACService(config);
+        service = new HmacService(config);
     }
 
     @Test
