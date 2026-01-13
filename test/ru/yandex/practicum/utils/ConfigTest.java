@@ -21,7 +21,7 @@ class ConfigTest {
     void testDefaultValues() {
         Config config = new Config();
 
-        assertEquals("SHA256", config.getHmacAlg());
+        assertEquals("HmacSHA256", config.getHmacAlg());
         assertEquals(8080, config.getListenPort());
         assertEquals(1048576, config.getMaxMsgSizeBytes());
         assertNull(config.getSecret());
@@ -58,7 +58,7 @@ class ConfigTest {
         config.secret = Base64.getEncoder().encodeToString("test".getBytes());
         config.listenPort = 8080;
         config.maxMsgSizeBytes = 1024;
-        config.hmacAlg = "SHA256";
+        config.hmacAlg = "HmacSHA256";
 
         assertDoesNotThrow(config::validate);
     }
@@ -149,7 +149,7 @@ class ConfigTest {
                 InvalidConfigFormatException.class,
                 config::validate
         );
-        assertTrue(exception.getMessage().contains("Only SHA256 algorithm is supported"));
+        assertTrue(exception.getMessage().contains("Only HmacSHA256 algorithm is supported"));
     }
 
     @Test
@@ -245,7 +245,7 @@ class ConfigTest {
         // defaults
         assertEquals(8080, loadedConfig.getListenPort());
         assertEquals(1048576, loadedConfig.getMaxMsgSizeBytes());
-        assertEquals("SHA256", loadedConfig.getHmacAlg());
+        assertEquals("HmacSHA256", loadedConfig.getHmacAlg());
     }
 
 }
