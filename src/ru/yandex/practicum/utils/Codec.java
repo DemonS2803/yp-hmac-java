@@ -16,4 +16,16 @@ public class Codec {
         return new String(fromBase64(encodedData));
     }
 
+    public static boolean isBase64(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            Base64.getUrlDecoder().decode(str);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
 }

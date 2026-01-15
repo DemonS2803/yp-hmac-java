@@ -89,6 +89,6 @@ class HmacServiceTest {
 
         File configFile = tempDir.resolve("config.json").toFile();
         Files.writeString(configFile.toPath(), json);
-        config = Config.load("config.json");
+        config = Config.load(configFile.getAbsolutePath());
     }
 }

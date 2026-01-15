@@ -8,4 +8,7 @@ public class VerifyResponseDto {
         ok = isOk ? "true" : "false";
     }
 
+    public String getOk() {
+        return ok;
+    }
 }

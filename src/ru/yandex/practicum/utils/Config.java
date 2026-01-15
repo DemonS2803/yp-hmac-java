@@ -18,6 +18,7 @@ public class Config {
     String secret;
     int listenPort = 8080;
     int maxMsgSizeBytes = 1048576;
+    int maxRequestBodySizeBytes = 1048576;
 
     public String getHmacAlg() {
         return hmacAlg;
@@ -33,6 +34,10 @@ public class Config {
 
     public int getMaxMsgSizeBytes() {
         return maxMsgSizeBytes;
+    }
+
+    public int getMaxRequestBodySizeBytes() {
+        return maxRequestBodySizeBytes;
     }
 
     public byte[] getSecretBytes() {
@@ -78,6 +83,10 @@ public class Config {
 
         if (maxMsgSizeBytes <= 0) {
             throw new InvalidConfigFormatException("maxMsgSizeBytes must be positive");
+        }
+
+        if (maxRequestBodySizeBytes <= 0) {
+            throw new InvalidConfigFormatException("maxRequestBodySizeBytes must be positive");
         }
 
         if (!hmacAlg.equals("HmacSHA256")) {

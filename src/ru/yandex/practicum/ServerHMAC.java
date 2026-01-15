@@ -10,7 +10,7 @@ public class ServerHMAC {
         HmacService service = new HmacService(config);
 
         // разделение на случай добавления иных методов взаимодействия (rpc, cli)
-        HttpHmacServer server = new HttpHmacServer(service, config.getListenPort());
+        HttpHmacServer server = new HttpHmacServer(service, config);
 
         server.start();
 //        server.stop();

@@ -46,4 +46,21 @@ public class CodecTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("base64Encoded")
+    void testCodec_isBase64(String encoded, boolean isValid) {
+        assertEquals(isValid, Codec.isBase64(encoded), STR."\{encoded} is \{isValid ? "valid" : "invalid"} base64");
+    }
+
+    static Stream<Arguments> base64Encoded() {
+        return Stream.of(
+                Arguments.of("SGVsbG8sIFdvcmxkIQ==", true),
+                Arguments.of("This is not a base64 string!", false),
+                Arguments.of("SGVsbG8sIFdvcmxkIQ", true),
+                Arguments.of("SGVsbG8", true),
+                Arguments.of("VGVzdDEyMw", true),
+                Arguments.of("", true)
+        );
+    }
+
 }

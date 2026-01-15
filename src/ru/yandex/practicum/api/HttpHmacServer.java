@@ -7,6 +7,7 @@ import ru.yandex.practicum.api.handlers.SignHmacHttpHandler;
 import ru.yandex.practicum.api.handlers.VerifyHmacHttpHandler;
 import ru.yandex.practicum.api.utils.HttpConstants;
 import ru.yandex.practicum.services.HmacService;
+import ru.yandex.practicum.utils.Config;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -18,11 +19,13 @@ public class HttpHmacServer {
     protected int port;
     protected HmacService service;
     protected HttpServer server;
+    protected Config config;
     protected Gson gson;
 
-    public HttpHmacServer(HmacService service, int port) {
+    public HttpHmacServer(HmacService service, Config config) {
         this.service = service;
-        this.port = port;
+        this.config = config;
+        this.port = config.getListenPort();
         getGson();
     }
 
@@ -30,8 +33,8 @@ public class HttpHmacServer {
         this.server = HttpServer.create(new InetSocketAddress(port), 0);
 
         log.info("Create context for HTTP server");
-        server.createContext(HttpConstants.SIGN_URL, new SignHmacHttpHandler(service, getGson()));
-        server.createContext(HttpConstants.VERIFY_URL, new VerifyHmacHttpHandler(service, getGson()));
+        server.createContext(HttpConstants.SIGN_URL, new SignHmacHttpHandler(service, config, getGson()));
+        server.createContext(HttpConstants.VERIFY_URL, new VerifyHmacHttpHandler(service, config, getGson()));
 
         log.info("Start HTTP server");
         this.server.start();
