@@ -76,7 +76,7 @@ public class VerifyHmacHttpHandlerTest extends BaseHttpHandlerTest {
 
         VerifyRequestDto verifyRequestDto = new VerifyRequestDto("REALLY SUPER LARGE HELLO", dto.getSignature());
         HttpResponse<String> verifyReq = sendRequest(server.getGson().toJson(verifyRequestDto), "GET", "/verify");
-        assertEquals(400, verifyReq.statusCode());
+        assertEquals(413, verifyReq.statusCode());
     }
 
 }

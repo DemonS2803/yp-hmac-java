@@ -15,7 +15,7 @@ EXPOSE 8080
 RUN java --enable-preview -jar target/yp-hmac-java-jar-with-dependencies.jar
 
 
-# Я по честно изначально делал без сборщика, и оно работает,
+# Я честно изначально делал без сборщика, и оно работает,
 # но не зря же умные люди придумали их
 
 ## build app

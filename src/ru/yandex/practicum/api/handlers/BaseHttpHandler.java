@@ -60,7 +60,7 @@ public class BaseHttpHandler implements HttpHandler {
         } catch (MessageTooLargeException e) {
             sendMessageTooLarge(httpExchange);
         } catch (RequestBodyTooLargeException e) {
-            sendMessageTooLarge(httpExchange);
+            sendRequestBodyTooLarge(httpExchange);
         } catch (MessageIsEmptyException e) {
             sendMessageIsEmpty(httpExchange);
         } catch (InvalidSignatureFormatException e) {
@@ -78,13 +78,12 @@ public class BaseHttpHandler implements HttpHandler {
 
     protected void validateRequest(HttpExchange httpExchange) throws IOException {
         validateMediaType(httpExchange);
-//        validateRequestSize(httpExchange);
-//        log.info(STR."Content length: \{httpExchange.getRequestHeaders().get("Content-Length")}");
+        validateRequestSize(httpExchange);
     }
 
     protected void validateMediaType(HttpExchange httpExchange) throws IOException {
         String contentType = String.valueOf(httpExchange.getRequestHeaders().get("Content-Type"));
-        log.info(STR."http content type: \{contentType}");
+        log.fine(STR."http content type: \{contentType}");
         if (contentType != null && !contentType.contains("application/json")) {
             throw new UnsupportedMediaTypeException("Supports only application/json media type");
         }
@@ -92,7 +91,7 @@ public class BaseHttpHandler implements HttpHandler {
 
     protected void validateRequestSize(HttpExchange httpExchange) {
         int requestBodyLength = Integer.parseInt(httpExchange.getRequestHeaders().getFirst("Content-Length"));
-        log.info(STR."Incoming content length: \{requestBodyLength}");
+        log.fine(STR."Incoming content length: \{requestBodyLength}. Max available: \{config.getMaxRequestBodySizeBytes()}");
         if (requestBodyLength > config.getMaxRequestBodySizeBytes()) {
             throw new RequestBodyTooLargeException(STR."Message size is \{requestBodyLength}. Only 20 available");
         }
@@ -113,9 +112,11 @@ public class BaseHttpHandler implements HttpHandler {
 
     protected void sendText(HttpExchange httpExchange, int status, String text) throws IOException {
         byte[] bytes = text.getBytes(StandardCharsets.UTF_8);
+        httpExchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
         httpExchange.sendResponseHeaders(status, bytes.length);
         try (OutputStream outputStream = httpExchange.getResponseBody()) {
             outputStream.write(bytes);
+            outputStream.flush();
         }
     }
 
@@ -124,7 +125,7 @@ public class BaseHttpHandler implements HttpHandler {
     }
 
     protected void sendMessageTooLarge(HttpExchange httpExchange) throws IOException {
-        sendText(httpExchange, 400, createErrorJsonResponse(HttpConstants.INVALID_MESSAGE_ERROR));
+        sendText(httpExchange, 413, createErrorJsonResponse(HttpConstants.INVALID_MESSAGE_ERROR));
     }
     protected void sendRequestBodyTooLarge(HttpExchange httpExchange) throws IOException {
         sendText(httpExchange, 413, createErrorJsonResponse(HttpConstants.REQUEST_BODY_TOO_LARGE_ERROR));

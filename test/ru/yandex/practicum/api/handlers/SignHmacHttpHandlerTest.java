@@ -33,7 +33,7 @@ public class SignHmacHttpHandlerTest extends BaseHttpHandlerTest {
         SignRequestDto requestDto = new SignRequestDto(msg);
         HttpResponse<String> response = sendRequest(server.getGson().toJson(requestDto), "GET", "/sign");
         if (msg.length() > 10) {
-            assertEquals(400, response.statusCode());
+            assertEquals(413, response.statusCode());
         } else {
             assertEquals(200, response.statusCode());
         }
