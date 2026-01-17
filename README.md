@@ -2,6 +2,8 @@
 # HMAC server for java
 ### Dmitry Sudakov
 
+PS: MR link https://github.com/DemonS2803/yp-hmac-java/pull/1
+
 ## Requirments
 
 - *nix operating system (Windows not personally recommended :-) )
