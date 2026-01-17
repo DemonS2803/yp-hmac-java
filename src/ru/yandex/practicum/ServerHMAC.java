@@ -13,6 +13,5 @@ public class ServerHMAC {
         HttpHmacServer server = new HttpHmacServer(service, config);
 
         server.start();
-//        server.stop();
     }
 }

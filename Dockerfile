@@ -7,12 +7,15 @@ WORKDIR /app
 
 COPY . .
 
-RUN mvn clean package
+RUN mvn clean package -Djava.util.logging.config.file=logging.properties 2>&1
 
 # Правда теперь порт из конфига не играет особой роли
 EXPOSE 8080
 
-RUN java --enable-preview -jar target/yp-hmac-java-jar-with-dependencies.jar
+RUN java \
+    --enable-preview \
+    -Djava.util.logging.config.file=logging.properties \
+    -jar target/yp-hmac-java-jar-with-dependencies.jar 2>&1
 
 
 # Я честно изначально делал без сборщика, и оно работает,

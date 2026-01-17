@@ -24,12 +24,12 @@ PS: you should specify exposing port if want to change it
 
 You could build application with tests
 ```bash
-mvn clean package
+mvn clean package -Djava.util.logging.config.file=logging.properties
 ```
 
 Or without
 ```bash
-mvn clean package -DskipTests
+mvn clean package -DskipTests -Djava.util.logging.config.file=logging.properties
 ```
 
 There is also "True way"
@@ -40,14 +40,14 @@ javac -d bin --enable-preview -cp "lib/*" --release 22 src/**/*.java test/**/*.j
 ## Run HMAC server
 
 ```bash
-java --enable-preview -jar target/yp-hmac-java-jar-with-dependencies.jar
+java --enable-preview -Djava.util.logging.config.file=logging.properties -jar target/yp-hmac-java-jar-with-dependencies.jar
 ```
 
 ## Run tests
 
 Running tests is available with maven
 ```bash
-mvn test
+mvn test -Djava.util.logging.config.file=logging.properties
 ```
 
 ## Work with config
