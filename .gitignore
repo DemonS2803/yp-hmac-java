@@ -5,6 +5,9 @@
 # Log file
 *.log
 
+# Patch files
+*.patch
+
 # BlueJ files
 *.ctxt
 
@@ -24,6 +27,9 @@
 hs_err_pid*
 replay_pid*
 
-out
 *.iml
 /.idea/
+
+# build targets
+out
+target
