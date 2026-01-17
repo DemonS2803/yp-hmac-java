@@ -122,5 +122,9 @@ curl -sS -f -X GET http://localhost:8080/verify \
   -d '{"msg":"hello!","signature":"@@@GBgHTPLL83wM935axaL96lKQ83eOKKUG2_MArxCp3Mc@@@"}'
 ```
 
+## Ограничения учебной реализации
+- HMAC ≠ асимметричная ЭП
+- Нет многоключевой валидации
+- Ротация простая
 
 
