@@ -22,11 +22,11 @@ public class VerifyHmacHttpHandlerTest extends BaseHttpHandlerTest {
     @ValueSource(strings = {"Hello", "a", "asdfasdfa"})
     void testVerifyEndpoint_successVerify(String msg) throws IOException, InterruptedException {
         SignRequestDto signRequestDto = new SignRequestDto(msg);
-        HttpResponse<String> signReq = sendRequest(server.getGson().toJson(signRequestDto), "GET", "/sign");
+        HttpResponse<String> signReq = sendRequest(server.getGson().toJson(signRequestDto), "POST", "/sign");
         SignResponseDto dto = server.getGson().fromJson(signReq.body(), SignResponseDto.class);
 
         VerifyRequestDto verifyRequestDto = new VerifyRequestDto(msg, dto.getSignature());
-        HttpResponse<String> verifyReq = sendRequest(server.getGson().toJson(verifyRequestDto), "GET", "/verify");
+        HttpResponse<String> verifyReq = sendRequest(server.getGson().toJson(verifyRequestDto), "POST", "/verify");
         VerifyResponseDto verifyResponseDto = server.getGson().fromJson(verifyReq.body(), VerifyResponseDto.class);
         assertEquals("true", verifyResponseDto.getOk());
     }
@@ -35,11 +35,11 @@ public class VerifyHmacHttpHandlerTest extends BaseHttpHandlerTest {
     @MethodSource("incorrectVerifyMsgArgs")
     void testVerifyEndpoint_incorrectVerifyMsg(String signMsg, String verifyMsg) throws IOException, InterruptedException {
         SignRequestDto signRequestDto = new SignRequestDto(signMsg);
-        HttpResponse<String> signReq = sendRequest(server.getGson().toJson(signRequestDto), "GET", "/sign");
+        HttpResponse<String> signReq = sendRequest(server.getGson().toJson(signRequestDto), "POST", "/sign");
         SignResponseDto dto = server.getGson().fromJson(signReq.body(), SignResponseDto.class);
 
         VerifyRequestDto verifyRequestDto = new VerifyRequestDto(verifyMsg, dto.getSignature());
-        HttpResponse<String> verifyReq = sendRequest(server.getGson().toJson(verifyRequestDto), "GET", "/verify");
+        HttpResponse<String> verifyReq = sendRequest(server.getGson().toJson(verifyRequestDto), "POST", "/verify");
         VerifyResponseDto verifyResponseDto = server.getGson().fromJson(verifyReq.body(), VerifyResponseDto.class);
         assertEquals("false", verifyResponseDto.getOk());
     }
@@ -57,22 +57,22 @@ public class VerifyHmacHttpHandlerTest extends BaseHttpHandlerTest {
     void testVerifyEndpoint_brokenSignature_shouldFail() throws IOException, InterruptedException {
         String msg = "Hello";
         SignRequestDto signRequestDto = new SignRequestDto(msg);
-        HttpResponse<String> signReq = sendRequest(server.getGson().toJson(signRequestDto), "GET", "/sign");
+        HttpResponse<String> signReq = sendRequest(server.getGson().toJson(signRequestDto), "POST", "/sign");
         SignResponseDto dto = server.getGson().fromJson(signReq.body(), SignResponseDto.class);
 
         VerifyRequestDto verifyRequestDto = new VerifyRequestDto(msg, "Invalid signature :-)");
-        HttpResponse<String> verifyReq = sendRequest(server.getGson().toJson(verifyRequestDto), "GET", "/verify");
+        HttpResponse<String> verifyReq = sendRequest(server.getGson().toJson(verifyRequestDto), "POST", "/verify");
         assertEquals(400, verifyReq.statusCode());
     }
 
     @Test
     void testVerifyEndpoint_incorrectVerifyMsgTooLarge() throws IOException, InterruptedException {
         SignRequestDto signRequestDto = new SignRequestDto("HELLO");
-        HttpResponse<String> signReq = sendRequest(server.getGson().toJson(signRequestDto), "GET", "/sign");
+        HttpResponse<String> signReq = sendRequest(server.getGson().toJson(signRequestDto), "POST", "/sign");
         SignResponseDto dto = server.getGson().fromJson(signReq.body(), SignResponseDto.class);
 
         VerifyRequestDto verifyRequestDto = new VerifyRequestDto("REALLY SUPER LARGE HELLO", dto.getSignature());
-        HttpResponse<String> verifyReq = sendRequest(server.getGson().toJson(verifyRequestDto), "GET", "/verify");
+        HttpResponse<String> verifyReq = sendRequest(server.getGson().toJson(verifyRequestDto), "POST", "/verify");
         assertEquals(413, verifyReq.statusCode());
     }
 

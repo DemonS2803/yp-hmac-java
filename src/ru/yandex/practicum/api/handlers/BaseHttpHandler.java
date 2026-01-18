@@ -97,12 +97,12 @@ public class BaseHttpHandler implements HttpHandler {
         }
     }
 
-    protected void handleGet(HttpExchange httpExchange)
-            throws IOException, NoSuchAlgorithmException, InvalidKeyException {
+    protected void handleGet(HttpExchange httpExchange) throws IOException {
         sendMethodNotSupported(httpExchange);
     }
 
-    protected void handlePost(HttpExchange httpExchange) throws IOException {
+    protected void handlePost(HttpExchange httpExchange)
+            throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         sendMethodNotSupported(httpExchange);
     }
 

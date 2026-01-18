@@ -20,7 +20,7 @@ public class VerifyHmacHttpHandler extends BaseHttpHandler {
     }
 
     @Override
-    protected void handleGet(HttpExchange httpExchange) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
+    protected void handlePost(HttpExchange httpExchange) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         VerifyRequestDto dto = gson.fromJson(getRequestBody(httpExchange), VerifyRequestDto.class);
         log.info(STR."Verify message with size \{dto.getMsg().length()}");
         boolean isValid = service.verify(dto.getMsg(), dto.getSignature());

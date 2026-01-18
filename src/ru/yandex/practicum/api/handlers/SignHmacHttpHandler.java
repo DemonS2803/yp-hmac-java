@@ -20,7 +20,7 @@ public class SignHmacHttpHandler extends BaseHttpHandler {
     }
 
     @Override
-    protected void handleGet(HttpExchange httpExchange)
+    protected void handlePost(HttpExchange httpExchange)
             throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         SignRequestDto dto = gson.fromJson(getRequestBody(httpExchange), SignRequestDto.class);
         log.info(STR."Sign message with size \{dto.getMsg().length()}");
