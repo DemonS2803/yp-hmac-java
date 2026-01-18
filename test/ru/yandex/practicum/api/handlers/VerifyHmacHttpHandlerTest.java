@@ -1,6 +1,5 @@
 package ru.yandex.practicum.api.handlers;
 
-import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,8 +9,6 @@ import ru.yandex.practicum.api.dto.SignRequestDto;
 import ru.yandex.practicum.api.dto.SignResponseDto;
 import ru.yandex.practicum.api.dto.VerifyRequestDto;
 import ru.yandex.practicum.api.dto.VerifyResponseDto;
-import ru.yandex.practicum.services.HmacService;
-import ru.yandex.practicum.utils.Codec;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;

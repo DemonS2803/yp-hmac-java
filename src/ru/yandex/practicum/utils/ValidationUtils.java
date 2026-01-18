@@ -4,8 +4,6 @@ import ru.yandex.practicum.exceptions.InvalidSignatureFormatException;
 import ru.yandex.practicum.exceptions.MessageIsEmptyException;
 import ru.yandex.practicum.exceptions.MessageTooLargeException;
 
-import java.util.logging.Logger;
-
 public class ValidationUtils {
 
     public static void validateSignatureIsBase64(String signature) {

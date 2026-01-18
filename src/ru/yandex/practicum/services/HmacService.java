@@ -1,8 +1,6 @@
 package ru.yandex.practicum.services;
 
 import ru.yandex.practicum.exceptions.InvalidSignatureFormatException;
-import ru.yandex.practicum.exceptions.MessageIsEmptyException;
-import ru.yandex.practicum.exceptions.MessageTooLargeException;
 import ru.yandex.practicum.utils.Codec;
 import ru.yandex.practicum.utils.Config;
 import ru.yandex.practicum.utils.ValidationUtils;
